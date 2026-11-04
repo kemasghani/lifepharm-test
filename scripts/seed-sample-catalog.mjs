@@ -7,7 +7,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assertNoUserErrors, gql, storeFromArgs } from './lib/shopify.mjs';
-import { collections, faqs, ingredients, products } from './sample-data.mjs';
+import { collections, faqs, ingredients, products, testimonials } from './sample-data.mjs';
 
 const store = storeFromArgs();
 const imagesDir = path.join(path.dirname(fileURLToPath(import.meta.url)), 'sample-assets', 'images');
@@ -98,7 +98,7 @@ function upsertMetaobject(type, handle, fields, status = 'ACTIVE') {
   return metaobjectUpsert.metaobject.id;
 }
 
-const refs = { ingredient: {}, faq_item: {} };
+const refs = { ingredient: {}, faq_item: {}, testimonial: {} };
 
 for (const { handle, name, amount, summary, image, status } of ingredients) {
   const fileId = await ensureFile(image, name);
@@ -122,6 +122,15 @@ for (const { handle, question, answer } of faqs) {
     { key: 'answer', value: answer },
   ]);
   console.log(`faq         ${handle}`);
+}
+
+for (const { handle, quote, name, detail } of testimonials) {
+  refs.testimonial[handle] = upsertMetaobject('testimonial', handle, [
+    { key: 'quote', value: quote },
+    { key: 'name', value: name },
+    { key: 'detail', value: detail },
+  ]);
+  console.log(`testimonial ${handle}`);
 }
 
 const onlineStore = gql(
@@ -180,11 +189,14 @@ for (const product of products) {
     productOptions: [
       { name: optionName, position: 1, values: product.variants.map(({ name }) => ({ name })) },
     ],
-    variants: product.variants.map(({ name, price, compareAt }) => ({
+    variants: product.variants.map(({ name, price, compareAt, servings }) => ({
       optionValues: [{ optionName, name }],
       price,
       compareAtPrice: compareAt ?? null,
       inventoryItem: { tracked: false },
+      metafields: servings
+        ? [{ namespace: 'custom', key: 'servings', type: 'number_integer', value: String(servings) }]
+        : [],
     })),
     metafields: product.metafields.map(toMetafield),
   };
