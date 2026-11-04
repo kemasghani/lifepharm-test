@@ -324,6 +324,41 @@
         "padding-block-end": 0
       }
     },
+    "product_guide": {
+      "type": "product-guide",
+      "blocks": {
+        "how_to_use": {
+          "type": "how_to_use",
+          "settings": {
+            "heading": "How to use"
+          }
+        },
+        "key_ingredients": {
+          "type": "key_ingredients",
+          "settings": {
+            "heading": "Key ingredients"
+          }
+        },
+        "faq": {
+          "type": "faq",
+          "settings": {
+            "heading": "Questions",
+            "max_items": 5,
+            "open_first": true
+          }
+        }
+      },
+      "block_order": [
+        "how_to_use",
+        "key_ingredients",
+        "faq"
+      ],
+      "settings": {
+        "layout": "split",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
     "product_recommendations_qggXJq": {
       "type": "product-recommendations",
       "blocks": {
@@ -469,6 +504,7 @@
   },
   "order": [
     "main",
+    "product_guide",
     "product_recommendations_qggXJq"
   ]
 }
