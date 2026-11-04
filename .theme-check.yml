@@ -10,3 +10,8 @@ UnknownFilter:
   ignore:
     - blocks/disclosures.liquid
     - snippets/cart-disclosure-tooltip.liquid
+
+# The store runs in English, and Shopify falls back to the default locale for
+# missing keys. New keys are translated when a language is actually published.
+MatchingTranslations:
+  enabled: false
