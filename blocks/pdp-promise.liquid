@@ -1,0 +1,88 @@
+{% doc %}
+  The promise beside the buy button: a tagline and up to three benefits, read from
+  custom.tagline and custom.benefits. Without a tagline it falls back to the
+  product description, so a product with no story data still reads properly.
+
+  @example
+  {% content_for 'block', type: 'pdp-promise', id: 'promise' %}
+{% enddoc %}
+
+{%- liquid
+  assign promise_product = closest.product
+  assign tagline = promise_product.metafields.custom.tagline.value | strip
+  assign benefits = promise_product.metafields.custom.benefits.value
+-%}
+
+<div class="pdp-promise" {{ block.shopify_attributes }}>
+  {%- if tagline != blank -%}
+    <p class="pdp-promise__tagline">{{ tagline | escape }}</p>
+  {%- else -%}
+    <div class="pdp-promise__fallback rte">{{ promise_product.description }}</div>
+  {%- endif -%}
+
+  {%- if benefits != blank -%}
+    <ul class="pdp-promise__benefits" role="list">
+      {%- for benefit in benefits limit: 3 -%}
+        <li>
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+            <path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>{{ benefit | escape }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .pdp-promise {
+    display: grid;
+    gap: 0.875rem;
+    width: 100%;
+  }
+
+  .pdp-promise__tagline {
+    margin: 0;
+    font-size: 1.1875rem;
+    line-height: 1.35;
+  }
+
+  .pdp-promise__benefits {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.9688rem;
+    line-height: 1.4;
+  }
+
+  .pdp-promise__benefits li {
+    display: grid;
+    grid-template-columns: 1rem minmax(0, 1fr);
+    gap: 0.625rem;
+    align-items: start;
+  }
+
+  .pdp-promise__benefits svg {
+    margin-block-start: 0.15em;
+    color: var(--pdp-accent, currentColor);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product promise",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the product metafields custom.tagline and custom.benefits."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product promise"
+    }
+  ]
+}
+{% endschema %}
