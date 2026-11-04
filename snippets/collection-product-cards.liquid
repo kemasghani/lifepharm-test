@@ -1,0 +1,25 @@
+{%- doc -%}
+  Renders the first four products of a collection as simple cards.
+
+  Prices come from one variant, so the saving always matches the price shown
+  next to it. Rendered from a collection template, where `collection` exists.
+
+  @param {collection} collection - The collection to list
+
+  @example
+  {% render 'collection-product-cards', collection: collection %}
+{%- enddoc -%}
+
+{%- for product in collection.products limit: 4 -%}
+  {%- assign variant = product.selected_or_first_available_variant -%}
+  <div class="card">
+    <a href="{{ product.url }}">{{ product.title | escape }}</a>
+    {%- if variant.compare_at_price > variant.price -%}
+      <span class="sale">Save {{ variant.compare_at_price | minus: variant.price | money }}</span>
+    {%- endif -%}
+    <span>{{ variant.price | money }}</span>
+    {%- if product.metafields.custom.badge != blank -%}
+      <span class="badge">{{ product.metafields.custom.badge.value | escape }}</span>
+    {%- endif -%}
+  </div>
+{%- endfor -%}

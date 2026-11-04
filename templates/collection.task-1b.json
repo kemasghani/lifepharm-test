@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "cards": {
+      "type": "collection-product-cards",
+      "settings": {}
+    }
+  },
+  "order": ["cards"]
+}
