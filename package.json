@@ -1,0 +1,16 @@
+{
+  "name": "lifepharm-trial-storefront",
+  "private": true,
+  "type": "module",
+  "description": "Paid trial theme: Product guide section on Horizon 4.4.0, plus setup and verification scripts.",
+  "scripts": {
+    "setup:data": "node scripts/setup-custom-data.mjs",
+    "seed": "node scripts/seed-sample-catalog.mjs",
+    "assets": "node scripts/sample-assets/render.mjs",
+    "verify": "node tests/verify-storefront.mjs",
+    "lint": "shopify theme check --path ."
+  },
+  "devDependencies": {
+    "playwright-core": "^1.50.0"
+  }
+}
