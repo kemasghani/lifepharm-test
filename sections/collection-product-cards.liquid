@@ -1,0 +1,56 @@
+<div class="collection-cards">
+  <h1 class="collection-cards__title">{{ collection.title | escape }}</h1>
+  <div class="collection-cards__grid">
+    {% render 'collection-product-cards', collection: collection %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .collection-cards {
+    max-width: 75rem;
+    margin-inline: auto;
+    padding: 3rem clamp(1.25rem, 0.75rem + 2.5vw, 3rem);
+  }
+
+  .collection-cards__title {
+    margin: 0 0 2rem;
+    font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
+  }
+
+  .collection-cards__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+    gap: 1rem;
+  }
+
+  .collection-cards .card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+    padding: 1.25rem;
+    border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+    border-radius: 0.5rem;
+  }
+
+  .collection-cards .sale {
+    font-weight: 600;
+  }
+
+  .collection-cards .badge {
+    padding: 0.125rem 0.5rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection cards",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": []
+}
+{% endschema %}
