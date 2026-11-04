@@ -6,12 +6,12 @@
   const withTheme = (path) => `${path}?${preview ? `preview_theme_id=${preview}&` : ''}cb=${Date.now()}`;
 
   const products = [
-    { handle: 'daily-greens-powder', blocks: ['how_to_use', 'key_ingredients', 'faq'], steps: 3, ingredients: 4, faqs: 5 },
-    { handle: 'daily-greens-travel-sticks', blocks: ['faq', 'key_ingredients', 'how_to_use'], steps: 3, ingredients: 4, faqs: 3 },
-    { handle: 'magnesium-night-capsules', blocks: ['how_to_use', 'faq'], steps: 2, ingredients: 0, faqs: 2 },
-    { handle: 'marine-collagen-peptides', blocks: ['how_to_use', 'key_ingredients'], steps: 4, ingredients: 2, faqs: 0 },
-    { handle: 'vitamin-c-drink-mix', blocks: [], steps: 0, ingredients: 0, faqs: 0 },
-    { handle: 'bamboo-measuring-scoop', blocks: [], steps: 0, ingredients: 0, faqs: 0 },
+    { handle: 'daily-greens-powder', blocks: ['how_to_use', 'key_ingredients', 'faq'], steps: 3, ingredients: 4, faqs: 5, story: true, proof: 3 },
+    { handle: 'daily-greens-travel-sticks', blocks: ['faq', 'key_ingredients', 'how_to_use'], steps: 3, ingredients: 4, faqs: 3, story: true, proof: 0 },
+    { handle: 'magnesium-night-capsules', blocks: ['how_to_use', 'faq'], steps: 2, ingredients: 0, faqs: 2, story: true, proof: 2 },
+    { handle: 'marine-collagen-peptides', blocks: ['how_to_use', 'key_ingredients'], steps: 4, ingredients: 2, faqs: 0, story: true, proof: 1 },
+    { handle: 'vitamin-c-drink-mix', blocks: [], steps: 0, ingredients: 0, faqs: 0, story: false, proof: 0 },
+    { handle: 'bamboo-measuring-scoop', blocks: [], steps: 0, ingredients: 0, faqs: 0, story: false, proof: 0 },
   ];
 
   const load = async (path) => {
@@ -41,6 +41,11 @@
     check(`${expected.handle}: wrapper only when needed`, !!doc.querySelector('.product-guide') === expected.blocks.length > 0);
     check(`${expected.handle}: no merchant note for shoppers`, count('.product-guide__notice') === 0);
     check(`${expected.handle}: draft and empty entries stay out`, !html.includes('Unpublished ingredient') && !html.includes('This question has an empty answer'));
+    check(
+      `${expected.handle}: story sections only with story data`,
+      !!doc.querySelector('.pdp-why') === expected.story && !!doc.querySelector('.pdp-close') === expected.story && count('.pdp-proof__card') === expected.proof,
+      `${count('.pdp-proof__card')} quotes`,
+    );
   }
 
   const { doc: full } = await load('/products/daily-greens-powder');
@@ -73,6 +78,9 @@
     check('FAQ: opening one closes the others', onPage.filter((item) => item.open).length === 1 && onPage[1].open);
     onPage[0].open = true;
   }
+
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--pdp-accent').trim();
+  if (accent) check('Product page accent is set', accent.startsWith('#'), accent);
 
   const failed = rows.filter((row) => row.result !== 'pass');
   console.table(rows);

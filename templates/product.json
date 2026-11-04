@@ -132,8 +132,8 @@
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
-                    "type_preset": "h3",
-                    "font": "var(--font-body--family)",
+                    "type_preset": "h2",
+                    "font": "var(--font-heading--family)",
                     "font_size": "1rem",
                     "line_height": "normal",
                     "letter_spacing": "normal",
@@ -149,47 +149,11 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {}
-                },
-                "price_tVjtKg": {
-                  "type": "price",
-                  "settings": {
-                    "show_sale_price_first": true,
-                    "show_installments": false,
-                    "show_tax_info": false,
-                    "type_preset": "paragraph",
-                    "width": "100%",
-                    "alignment": "left",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "text_color": "",
-                    "padding-block-start": 4,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
                 }
               },
               "block_order": [
-                "text_xrnftG",
-                "price_tVjtKg"
+                "text_xrnftG"
               ]
-            },
-            "divider_VJhene": {
-              "type": "_divider",
-              "name": "t:names.divider",
-              "settings": {
-                "thickness": 1,
-                "corner_radius": "square",
-                "divider_color": "{{ settings.color_palette.color2 }}",
-                "width_percent": 100,
-                "padding-block-start": 0,
-                "padding-block-end": 0
-              },
-              "blocks": {}
             },
             "variant_picker_R3rGDr": {
               "type": "variant-picker",
@@ -273,39 +237,49 @@
               },
               "block_order": []
             },
-            "text_aEtTtq": {
-              "type": "text",
-              "name": "t:names.product_description",
+            "price_tVjtKg": {
+              "type": "price",
               "settings": {
-                "text": "{{ closest.product.description }}",
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h4",
                 "width": "100%",
-                "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "rte",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
-                "wrap": "pretty",
                 "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
+                "padding-block-start": 4,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-end": 0,
+                "show_value": true
               },
               "blocks": {}
+            },
+            "pdp_promise": {
+              "type": "pdp-promise",
+              "settings": {}
+            },
+            "pdp_assurance": {
+              "type": "pdp-assurance",
+              "settings": {
+                "shipping": "Free shipping over $50",
+                "returns": "30-day returns",
+                "checkout": "Secure checkout"
+              }
             }
           },
           "block_order": [
             "group_icgrde",
-            "divider_VJhene",
+            "pdp_promise",
+            "price_tVjtKg",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
-            "text_aEtTtq"
+            "pdp_assurance"
           ]
         }
       },
@@ -320,7 +294,7 @@
         "gap": 48,
         "enable_sticky_add_to_cart": true,
         "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 0,
+        "padding-block-start": 24,
         "padding-block-end": 0
       }
     },
@@ -330,19 +304,19 @@
         "how_to_use": {
           "type": "how_to_use",
           "settings": {
-            "heading": "How to use"
+            "heading": "How to use it"
           }
         },
         "key_ingredients": {
           "type": "key_ingredients",
           "settings": {
-            "heading": "Key ingredients"
+            "heading": "What's inside"
           }
         },
         "faq": {
           "type": "faq",
           "settings": {
-            "heading": "Questions",
+            "heading": "Questions, answered",
             "max_items": 5,
             "open_first": true
           }
@@ -500,11 +474,38 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "pdp_palette": {
+      "type": "pdp-palette",
+      "settings": {}
+    },
+    "pdp_why": {
+      "type": "pdp-why",
+      "settings": {
+        "eyebrow": "Why it exists"
+      }
+    },
+    "pdp_proof": {
+      "type": "pdp-proof",
+      "settings": {
+        "eyebrow": "In their words",
+        "heading": "What keeps people going"
+      }
+    },
+    "pdp_close": {
+      "type": "pdp-close",
+      "settings": {
+        "heading": "Ready when you are."
+      }
     }
   },
   "order": [
+    "pdp_palette",
     "main",
+    "pdp_why",
+    "pdp_proof",
     "product_guide",
+    "pdp_close",
     "product_recommendations_qggXJq"
   ]
 }

@@ -1,0 +1,177 @@
+{%- comment -%}
+  The problem and the answer, in the product's own tint. The facts underneath are
+  worked out from product data, so they can't drift from what's being sold.
+{%- endcomment -%}
+
+{%- liquid
+  assign story_headline = product.metafields.custom.story_headline.value | strip
+  assign story_body = product.metafields.custom.story_body.value | strip
+  assign ingredient_total = product.metafields.custom.key_ingredients.value | size
+
+  assign best_per_serving = 0
+  assign fewest_servings = 0
+  assign most_servings = 0
+
+  for variant in product.variants
+    assign variant_servings = variant.metafields.custom.servings.value
+    if variant_servings > 0
+      assign per_serving = variant.price | divided_by: variant_servings
+      if best_per_serving == 0 or per_serving < best_per_serving
+        assign best_per_serving = per_serving
+      endif
+      if fewest_servings == 0 or variant_servings < fewest_servings
+        assign fewest_servings = variant_servings
+      endif
+      if variant_servings > most_servings
+        assign most_servings = variant_servings
+      endif
+    endif
+  endfor
+-%}
+
+{%- if story_headline != blank -%}
+  <div class="pdp-band pdp-why">
+    <div class="pdp-band__inner pdp-why__inner">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="pdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        <h2 class="pdp-why__headline h2">{{ story_headline | escape }}</h2>
+      </div>
+      <div class="pdp-why__body">
+        {%- if story_body != blank -%}
+          <p>{{ story_body | escape | newline_to_br }}</p>
+        {%- endif -%}
+        <dl class="pdp-why__facts">
+          {%- if ingredient_total > 0 -%}
+            <div>
+              <dt>{{ 'pdp.key_ingredients' | t }}</dt>
+              <dd>{{ ingredient_total }}</dd>
+            </div>
+          {%- endif -%}
+          {%- if fewest_servings > 0 -%}
+            <div>
+              <dt>{{ 'pdp.servings' | t }}</dt>
+              <dd>
+                {{- fewest_servings -}}
+                {%- if most_servings > fewest_servings %} or {{ most_servings }}{% endif -%}
+              </dd>
+            </div>
+            <div>
+              <dt>{{ 'pdp.per_serving' | t }}</dt>
+              <dd>
+                {%- if fewest_servings != most_servings -%}
+                  <small>{{ 'pdp.from' | t }}</small>
+                {% endif -%}
+                {{- best_per_serving | money -}}
+              </dd>
+            </div>
+          {%- endif -%}
+        </dl>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% render 'pdp-band-styles' %}
+
+{% stylesheet %}
+  .pdp-why {
+    padding-block: clamp(3em, 2em + 4vw, 5.5em);
+    background: var(--pdp-tint);
+  }
+
+  .pdp-why__inner {
+    display: grid;
+    gap: 1.5em clamp(2em, 6vw, 5em);
+  }
+
+  .pdp-why .pdp-why__headline {
+    margin: 0;
+    color: inherit;
+    font-size: clamp(1.875em, 1.4em + 2.2vw, 3em);
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  .pdp-why__body {
+    display: grid;
+    gap: 1.75em;
+    align-content: start;
+    font-size: 1.0625em;
+    line-height: 1.6;
+  }
+
+  .pdp-why__body p {
+    margin: 0;
+    max-width: 34em;
+  }
+
+  .pdp-why__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(6.5em, 1fr));
+    gap: 1em;
+    margin: 0;
+    padding-block-start: 1.25em;
+    border-block-start: 1px solid var(--pdp-line);
+  }
+
+  .pdp-why__facts div {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.125em;
+    justify-content: flex-end;
+  }
+
+  .pdp-why__facts dt {
+    color: var(--pdp-muted);
+    font-size: 0.8125em;
+    line-height: 1.3;
+  }
+
+  .pdp-why__facts dd {
+    margin: 0;
+    color: var(--pdp-accent);
+    font-size: 1.5em;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  .pdp-why__facts small {
+    font-size: 0.55em;
+    font-weight: 500;
+  }
+
+  @media (min-width: 750px) {
+    .pdp-why__inner {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product story",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows custom.story_headline and custom.story_body. Hidden when there is no headline."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Label",
+      "default": "Why it exists"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product story"
+    }
+  ]
+}
+{% endschema %}

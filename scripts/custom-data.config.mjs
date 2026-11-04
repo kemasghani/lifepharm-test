@@ -26,6 +26,16 @@ export const metaobjects = [
       { key: 'answer', name: 'Answer', type: 'rich_text_field', required: true },
     ],
   },
+  {
+    type: 'testimonial',
+    name: 'Testimonial',
+    displayNameKey: 'name',
+    fieldDefinitions: [
+      { key: 'quote', name: 'Quote', type: 'multi_line_text_field', required: true },
+      { key: 'name', name: 'Customer name', type: 'single_line_text_field', required: true },
+      { key: 'detail', name: 'Detail', type: 'single_line_text_field' },
+    ],
+  },
 ];
 
 export const productMetafields = [
@@ -54,5 +64,49 @@ export const productMetafields = [
     name: 'Badge',
     description: 'Short label for product cards, for example "New".',
     type: 'single_line_text_field',
+  },
+  {
+    key: 'tagline',
+    name: 'Tagline',
+    description: 'One line under the product title that says what the buyer gets.',
+    type: 'single_line_text_field',
+  },
+  {
+    key: 'benefits',
+    name: 'Benefits',
+    description: 'Up to three short points beside the buy button.',
+    type: 'list.single_line_text_field',
+  },
+  {
+    key: 'story_headline',
+    name: 'Story headline',
+    description: 'The problem this product solves, in one line.',
+    type: 'single_line_text_field',
+  },
+  {
+    key: 'story_body',
+    name: 'Story body',
+    description: 'Two sentences on how the product answers that problem.',
+    type: 'multi_line_text_field',
+  },
+  {
+    key: 'testimonials',
+    name: 'Testimonials',
+    description: 'Feeds the proof section on the product page.',
+    type: 'list.metaobject_reference',
+    metaobjectType: 'testimonial',
+  },
+  {
+    key: 'accent_color',
+    name: 'Accent color',
+    description: 'Taken from the packaging. Sets buttons and tinted bands on this product page.',
+    type: 'color',
+  },
+  {
+    key: 'servings',
+    name: 'Servings',
+    description: 'Servings in this variant. Used for the price per serving.',
+    type: 'number_integer',
+    ownerType: 'PRODUCTVARIANT',
   },
 ];

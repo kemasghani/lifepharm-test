@@ -16,8 +16,8 @@
           "settings": {
             "label": "Daily Greens Powder",
             "url": "/products/daily-greens-powder",
-            "proves": "All three metafields filled",
-            "expected": "How to use, Key ingredients and Questions. Only five of six FAQs, because the block limit is five."
+            "proves": "The full product page story, with all three metafields filled",
+            "expected": "Problem, proof, how to use it, what's inside, questions and a closing offer. Only five of six FAQs, because the block limit is five."
           }
         },
         "scenario_2": {
@@ -26,7 +26,7 @@
             "label": "Daily Greens Travel Sticks",
             "url": "/products/daily-greens-travel-sticks",
             "proves": "A second JSON template with another block order",
-            "expected": "Questions first, then Key ingredients, then How to use. Headings sit above the content."
+            "expected": "Questions first, then What's inside, then How to use it. Headings sit above the content."
           }
         },
         "scenario_3": {
@@ -34,8 +34,8 @@
           "settings": {
             "label": "Magnesium Night Capsules",
             "url": "/products/magnesium-night-capsules",
-            "proves": "One empty metafield",
-            "expected": "No Key ingredients block, and no gap where it would have been."
+            "proves": "One empty metafield, and a different accent color",
+            "expected": "No What's inside block and no gap where it would have been. The page takes its violet from the packaging."
           }
         },
         "scenario_4": {
@@ -43,8 +43,8 @@
           "settings": {
             "label": "Marine Collagen Peptides",
             "url": "/products/marine-collagen-peptides",
-            "proves": "No FAQ metafield",
-            "expected": "How to use and Key ingredients only."
+            "proves": "No FAQ metafield, and a sale price",
+            "expected": "How to use it and What's inside only. Save $6.00 next to the price."
           }
         },
         "scenario_5": {
@@ -53,7 +53,7 @@
             "label": "Vitamin C Drink Mix",
             "url": "/products/vitamin-c-drink-mix",
             "proves": "Values that exist but render nothing: an empty list, a draft ingredient and an FAQ with an empty answer",
-            "expected": "No section at all."
+            "expected": "No Product guide at all. With no story data the page falls back to the description."
           }
         },
         "scenario_6": {
@@ -62,7 +62,7 @@
             "label": "Bamboo Measuring Scoop",
             "url": "/products/bamboo-measuring-scoop",
             "proves": "No guide metafields at all",
-            "expected": "No section at all."
+            "expected": "No Product guide at all."
           }
         },
         "scenario_7": {
@@ -86,7 +86,7 @@
       ],
       "settings": {
         "heading": "Trial review guide",
-        "intro": "Sample products only. Each page below proves one behavior of the Product guide section or the Task 1b fix. Resize the window, or open a page on a phone, to check the mobile layout."
+        "intro": "Sample products, sample reviews and fictional policies only. Each page below proves one behavior of the Product guide section or the Task 1b fix. Resize the window, or open a page on a phone, to check the mobile layout."
       }
     },
     "hero_jVaWmY": {

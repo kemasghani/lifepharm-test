@@ -1,0 +1,99 @@
+{%- comment -%}
+  Sets one accent color for the whole product page, taken from the packaging via
+  custom.accent_color. Every other PDP section reads these variables, so a page
+  stays in one palette. Prints no markup.
+{%- endcomment -%}
+
+{%- liquid
+  assign accent = product.metafields.custom.accent_color.value
+  if accent == blank
+    assign accent = settings.color_palette.foreground
+  endif
+
+  assign accent_contrast = accent | color_contrast: '#ffffff'
+  assign on_accent = '#ffffff'
+  if accent_contrast < 4.5
+    assign on_accent = settings.color_palette.foreground
+  endif
+-%}
+
+{% style %}
+  :root {
+    --pdp-accent: {{ accent }};
+    --pdp-on-accent: {{ on_accent }};
+    --pdp-accent-hover: color-mix(in srgb, {{ accent }} 86%, #000);
+    --pdp-tint: color-mix(in srgb, {{ accent }} 8%, {{ settings.color_palette.background }});
+    --pdp-line: color-mix(in srgb, {{ settings.color_palette.foreground }} 14%, transparent);
+    --pdp-muted: color-mix(in srgb, {{ settings.color_palette.foreground }} 72%, transparent);
+
+    --color-primary-button-background: var(--pdp-accent);
+    --color-primary-button-text: var(--pdp-on-accent);
+    --color-primary-button-border: var(--pdp-accent);
+    --color-primary-button-hover-background: var(--pdp-accent-hover);
+    --color-primary-button-hover-text: var(--pdp-on-accent);
+    --color-primary-button-hover-border: var(--pdp-accent-hover);
+    --color-selected-variant-background: var(--pdp-accent);
+    --color-selected-variant-border: var(--pdp-accent);
+    --color-selected-variant-text: var(--pdp-on-accent);
+  }
+
+  @supports (color: hsl(from red h s l)) {
+    :root {
+      --pdp-tint: hsl(from {{ accent }} h calc(s + 14) 93);
+    }
+  }
+{% endstyle %}
+
+{% stylesheet %}
+  .product-details button.shopify-payment-button__button--unbranded {
+    --button-background-color: transparent;
+    --button-color: var(--pdp-accent);
+    --button-border-color: var(--pdp-accent);
+
+    border: 1px solid var(--pdp-accent);
+  }
+
+  .product-details button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
+    --button-background-color: var(--pdp-tint);
+    --button-color: var(--pdp-accent);
+    --button-border-color: var(--pdp-accent);
+  }
+
+  .price-value {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25em 0.75em;
+    align-items: baseline;
+    margin-block-start: 0.375rem;
+    color: var(--pdp-muted);
+    font-family: var(--font-body--family);
+    font-size: 0.9375rem;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .price-value__save {
+    color: var(--pdp-accent);
+    font-weight: 600;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product page palette",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Sets the accent color for this page from the product metafield custom.accent_color. Nothing shows here."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product page palette"
+    }
+  ]
+}
+{% endschema %}

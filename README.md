@@ -13,6 +13,8 @@ The commit history is split by feature, and each pull request shows one piece of
 | [#5](../../pull/5) | **Task 1b:** the card snippet fix |
 | [#6](../../pull/6) | Reviewer guide on the homepage |
 | [#7](../../pull/7) | Portability fix and the test matrix |
+| [#9](../../pull/9) | Heading fix found by testing on Impact, safer setup script |
+| [#10](../../pull/10) | The product page story |
 
 ## Task 1a: the Product guide section
 
@@ -47,7 +49,29 @@ In the theme editor, a hidden block shows a short note instead, so the merchant 
 2. Run `node scripts/setup-custom-data.mjs --store your-store.myshopify.com`.
 3. In the theme editor, add the **Product guide** section to the product template.
 
-Not tested on a paid theme such as Impact. If a theme styles `details` or `summary` globally, check the FAQ first.
+Tested on Horizon 4.4.0 and Dawn with the file installed. On Impact 7.2.0 the trial's code is locked, so the section's markup and CSS were injected into a live Impact product page on the development store: no overflow at six widths, 51px tap targets and a working FAQ. That test is what led to the `h2` class, because Impact only styles headings through classes.
+
+## The product page around it
+
+The section is shown inside a full product page, built as one story that follows the questions a buyer asks in order.
+
+| Step | Question | Where it lives |
+| --- | --- | --- |
+| Promise | What is this, and is it for me? | `blocks/pdp-promise.liquid` |
+| Offer | What does it cost me? | Price block: saving and price per serving |
+| Problem | Why does this exist? | `sections/pdp-why.liquid` |
+| Proof | Does it work for people like me? | `sections/pdp-proof.liquid` |
+| Plan | How does it fit my day? | Product guide: How to use |
+| Parts | What am I putting in my body? | Product guide: Key ingredients |
+| Pushback | What if? | Product guide: FAQ |
+| Purchase | OK, I'm in. | `sections/pdp-close.liquid`, plus Horizon's sticky bar |
+
+- **One palette per product.** `sections/pdp-palette.liquid` reads `custom.accent_color`, taken from the packaging, and every button and band follows it. Text on the accent switches between white and ink with `color_contrast`, so a pale color can't break legibility.
+- **Numbers come from data.** Ingredient count, servings and price per serving are worked out from the product, so they can't drift from what's being sold.
+- **The same hide rule.** Every part hides when its data is empty, so a product with no story still reads properly.
+- **Reviews and policies are samples.** Quotes are labeled as sample reviews, and the shipping and returns lines are fictional. A live store would feed reviews from its review app.
+
+These are established patterns, not measured results. A sample store has no traffic, so the conversion effect can only be proven with an A/B test on a live store.
 
 ## Task 1b: the snippet fix
 
@@ -98,13 +122,14 @@ Open the store, enter the password, and paste `tests/storefront-matrix.js` into 
 
 | Check | Result |
 | --- | --- |
-| Test matrix on Horizon 4.4.0 | 43 of 43 passed |
-| Test matrix on Dawn, same section file, without the alternate template | 32 of 32 passed |
+| Test matrix on Horizon 4.4.0 | Every check passes |
+| Test matrix on Dawn, same section file, without the alternate template | 32 of 32 passed before the product page work |
 | Drag to reorder in the theme editor | Preview follows the new order |
-| Theme Check | Clean for this work. Two errors remain in Horizon's own files, both for the `applicable_disclosures` filter |
+| Same checks on Impact 7.2.0, section injected into a live page | No overflow at six widths, FAQ works |
+| Theme Check | 0 offenses, with two documented exclusions for Horizon's own `applicable_disclosures` filter |
 
 ## What I'd do next
 
-- Test on Impact, the theme the production stores use.
+- Install the section on a purchased copy of Impact and rerun the matrix.
 - Add `locales` for the block headings if the EU store runs in more than one language, and translate the metaobjects with Translate & Adapt.
 - Decide with the content team how many FAQs "short" should mean per product type.

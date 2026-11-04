@@ -1,0 +1,165 @@
+{%- comment -%}
+  The last ask, after the buyer's questions are answered. The button triggers the
+  page's real add to cart, so the selected variant and the cart drawer stay in
+  charge. Without JavaScript it links back to the top of the page.
+{%- endcomment -%}
+
+{%- liquid
+  assign close_line = product.metafields.custom.tagline.value | strip
+-%}
+
+{%- if close_line != blank and product.available -%}
+  <div class="pdp-band pdp-close">
+    <div class="pdp-band__inner">
+      <div class="pdp-close__panel">
+        <div>
+          {%- if section.settings.heading != blank -%}
+            <h2 class="pdp-close__heading h2">{{ section.settings.heading | escape }}</h2>
+          {%- endif -%}
+          <p class="pdp-close__line">{{ close_line | escape }}</p>
+        </div>
+        <div class="pdp-close__action">
+          <p class="pdp-close__price">
+            {%- if product.price_varies -%}
+              <small>{{ 'pdp.from' | t }}</small>
+            {% endif -%}
+            {{- product.price | money -}}
+          </p>
+          <a class="pdp-close__button" href="#MainContent" data-pdp-add>
+            {{- 'products.product.add_to_cart' | t -}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% render 'pdp-band-styles' %}
+
+{% stylesheet %}
+  .pdp-close {
+    padding-block: 0 clamp(3em, 2em + 3vw, 4.5em);
+  }
+
+  .pdp-close__panel {
+    display: grid;
+    gap: 1.5em;
+    padding: clamp(1.75em, 1.25em + 3vw, 3.5em);
+    border-radius: 0.75em;
+    background: var(--pdp-accent);
+    color: var(--pdp-on-accent);
+  }
+
+  .pdp-close .pdp-close__heading {
+    margin: 0 0 0.375em;
+    color: inherit;
+    font-size: clamp(1.75em, 1.4em + 1.6vw, 2.5em);
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  .pdp-close__line {
+    margin: 0;
+    font-size: 1.0625em;
+    line-height: 1.5;
+    opacity: 0.9;
+  }
+
+  .pdp-close__action {
+    display: grid;
+    gap: 0.75em;
+    align-content: center;
+  }
+
+  .pdp-close__price {
+    margin: 0;
+    font-size: 1.5em;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  .pdp-close__price small {
+    font-size: 0.6em;
+    font-weight: 500;
+  }
+
+  .pdp-close__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25em;
+    padding-inline: 2em;
+    border-radius: var(--style-border-radius-buttons-primary, 0.625em);
+    background: var(--pdp-on-accent);
+    color: var(--pdp-accent);
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+  }
+
+  .pdp-close__button:hover {
+    opacity: 0.9;
+  }
+
+  .pdp-close__button:focus-visible {
+    outline: 2px solid var(--pdp-on-accent);
+    outline-offset: 3px;
+  }
+
+  @media (min-width: 750px) {
+    .pdp-close__panel {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+    }
+
+    .pdp-close__action {
+      justify-items: end;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pdp-close__button {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-pdp-add]');
+    if (!trigger) return;
+
+    const button = document.querySelector('.product-details .add-to-cart-button, .product-details button[name="add"]');
+    if (!button || button.disabled) return;
+
+    event.preventDefault();
+    button.click();
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Closing offer",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Repeats the offer after the questions. Hidden when the product has no tagline or is sold out."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Ready when you are."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Closing offer"
+    }
+  ]
+}
+{% endschema %}

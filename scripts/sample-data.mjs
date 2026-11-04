@@ -34,6 +34,16 @@ export const faqs = [
   { handle: 'empty-answer', question: 'This question has an empty answer', answer: richText('') },
 ];
 
+// Demo content, labeled as sample reviews on the page.
+export const testimonials = [
+  { handle: 'greens-maya', quote: 'It takes less time than my coffee, so I actually keep doing it.', name: 'Maya R.', detail: 'Sample review' },
+  { handle: 'greens-tom', quote: "I don't like green drinks, and this one tastes fine in a smoothie.", name: 'Tom L.', detail: 'Sample review' },
+  { handle: 'greens-ana', quote: 'The sticks live in my bag. That was the part that made it stick.', name: 'Ana P.', detail: 'Sample review' },
+  { handle: 'magnesium-joe', quote: 'Two capsules and I am done. Nothing to mix, nothing to measure.', name: 'Joe K.', detail: 'Sample review' },
+  { handle: 'magnesium-lena', quote: 'It fits next to my toothbrush, which is why I remember it.', name: 'Lena S.', detail: 'Sample review' },
+  { handle: 'collagen-priya', quote: 'It disappears in my coffee. I forget it is there.', name: 'Priya D.', detail: 'Sample review' },
+];
+
 const steps = {
   greens: [
     'Add one level scoop to 250 ml of cold water or a smoothie.',
@@ -56,6 +66,11 @@ const list = (key, type, values) => ({ namespace: 'custom', key, type, value: JS
 const howTo = (values) => list('how_to_use', 'list.single_line_text_field', values);
 const ingredientRefs = (handles) => ({ key: 'key_ingredients', handles, kind: 'ingredient' });
 const faqRefs = (handles) => ({ key: 'faqs', handles, kind: 'faq_item' });
+const testimonialRefs = (handles) => ({ key: 'testimonials', handles, kind: 'testimonial' });
+const text = (key, value) => ({ namespace: 'custom', key, type: 'single_line_text_field', value });
+const body = (key, value) => ({ namespace: 'custom', key, type: 'multi_line_text_field', value });
+const color = (value) => ({ namespace: 'custom', key: 'accent_color', type: 'color', value });
+const benefits = (values) => list('benefits', 'list.single_line_text_field', values);
 const badge = (value) => ({ namespace: 'custom', key: 'badge', type: 'single_line_text_field', value });
 
 export const products = [
@@ -63,45 +78,75 @@ export const products = [
     handle: 'daily-greens-powder',
     title: 'Daily Greens Powder',
     image: 'product-daily-greens',
-    description: 'A sample greens powder used to show all three blocks filled in.',
+    description: 'Spirulina, wheatgrass, matcha and ginger in one scoop.',
     variants: [
-      { name: '30 servings', price: '39.00' },
-      { name: '60 servings', price: '69.00', compareAt: '78.00' },
+      { name: '30 servings', price: '39.00', servings: 30 },
+      { name: '60 servings', price: '69.00', compareAt: '78.00', servings: 60 },
     ],
     metafields: [
       howTo(steps.greens),
       ingredientRefs(['spirulina', 'wheatgrass', 'matcha', 'ginger-root']),
       faqRefs(['best-time', 'taste', 'how-long', 'vegan', 'storage', 'extra-question']),
+      color('#27442F'),
+      text('tagline', 'A full scoop of greens in 20 seconds.'),
+      benefits(['Four whole-food ingredients, nothing to chop', 'Mixes smooth in cold water or a smoothie', 'One scoop a day, no routine to rebuild']),
+      text('story_headline', "Most mornings don't leave room for a salad."),
+      body('story_body', 'Daily Greens puts spirulina, wheatgrass, matcha and ginger into one scoop. It takes less time than making coffee, so the habit actually lasts.'),
+      testimonialRefs(['greens-maya', 'greens-tom', 'greens-ana']),
     ],
   },
   {
     handle: 'daily-greens-travel-sticks',
     title: 'Daily Greens Travel Sticks',
     image: 'product-travel-sticks',
-    description: 'Same data as Daily Greens Powder on a second JSON template, with the blocks in a different order.',
+    description: 'The same greens in single-serve sticks for your bag.',
     templateSuffix: 'faq-first',
-    variants: [{ name: 'Default Title', price: '24.00' }],
+    variants: [{ name: 'Default Title', price: '24.00', servings: 14 }],
     metafields: [
       howTo(steps.greens),
       ingredientRefs(['spirulina', 'wheatgrass', 'matcha', 'ginger-root']),
       faqRefs(['best-time', 'taste', 'vegan']),
+      color('#27442F'),
+      text('tagline', 'The same greens, ready for your bag.'),
+      benefits(['One stick, one serving', 'No scoop to carry', 'Fourteen sticks in every box']),
+      text('story_headline', 'Good routines break the moment you travel.'),
+      body('story_body', 'Each stick holds one serving of Daily Greens. Tear it into a bottle of water and your routine comes with you.'),
     ],
   },
   {
     handle: 'magnesium-night-capsules',
     title: 'Magnesium Night Capsules',
     image: 'product-magnesium-night',
-    description: 'No ingredients metafield, so that block hides and the other two close the gap.',
-    variants: [{ name: 'Default Title', price: '28.00' }],
-    metafields: [howTo(steps.magnesium), faqRefs(['capsule-count', 'with-food'])],
+    description: 'A simple two-capsule step for the end of the day.',
+    variants: [{ name: 'Default Title', price: '28.00', servings: 30 }],
+    metafields: [
+      howTo(steps.magnesium),
+      faqRefs(['capsule-count', 'with-food']),
+      color('#2C2A4A'),
+      text('tagline', 'A simple step for the end of your day.'),
+      benefits(['Two capsules, about an hour before bed', 'No powders and no mixing', 'A 30-day supply in every bottle']),
+      text('story_headline', 'An evening routine should be easy to keep.'),
+      body('story_body', "Two capsules with a glass of water. That's the whole step, so it still happens on the nights you're tired."),
+      testimonialRefs(['magnesium-joe', 'magnesium-lena']),
+    ],
   },
   {
     handle: 'marine-collagen-peptides',
     title: 'Marine Collagen Peptides',
     image: 'product-marine-collagen',
-    description: 'No FAQ metafield, so that block hides.',
-    variants: [{ name: 'Default Title', price: '42.00', compareAt: '48.00' }],
-    metafields: [howTo(steps.collagen), ingredientRefs(['marine-collagen', 'vitamin-c']), badge('Bestseller')],
+    description: 'Unflavored peptides that dissolve in hot or cold drinks.',
+    variants: [{ name: 'Default Title', price: '42.00', compareAt: '48.00', servings: 30 }],
+    metafields: [
+      howTo(steps.collagen),
+      ingredientRefs(['marine-collagen', 'vitamin-c']),
+      badge('Bestseller'),
+      color('#9C4630'),
+      text('tagline', 'Stir it into the coffee you already drink.'),
+      benefits(['Dissolves in hot or cold drinks', 'No flavor to hide', 'One scoop, once a day']),
+      text('story_headline', "The best routine is the one you're already doing."),
+      body('story_body', "Marine Collagen dissolves into coffee, tea or a smoothie, so there's nothing new to remember."),
+      testimonialRefs(['collagen-priya']),
+    ],
   },
   {
     handle: 'vitamin-c-drink-mix',
