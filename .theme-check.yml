@@ -3,3 +3,10 @@ ignore:
   - node_modules/**
   - scripts/**
   - tests/**
+
+# Horizon 4.4.0 uses a filter that Theme Check doesn't know yet. Both files are
+# unmodified Horizon code.
+UnknownFilter:
+  ignore:
+    - blocks/disclosures.liquid
+    - snippets/cart-disclosure-tooltip.liquid
