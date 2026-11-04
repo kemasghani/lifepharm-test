@@ -15,6 +15,7 @@ The commit history is split by feature, and each pull request shows one piece of
 | [#7](../../pull/7) | Portability fix and the test matrix |
 | [#9](../../pull/9) | Heading fix found by testing on Impact, safer setup script |
 | [#10](../../pull/10) | The product page story |
+| [#11](../../pull/11) | One vertical rhythm across the product page |
 
 ## Task 1a: the Product guide section
 
@@ -122,11 +123,11 @@ Open the store, enter the password, and paste `tests/storefront-matrix.js` into 
 
 | Check | Result |
 | --- | --- |
-| Test matrix on Horizon 4.4.0 | Every check passes |
-| Test matrix on Dawn, same section file, without the alternate template | 32 of 32 passed before the product page work |
+| Test matrix on Horizon 4.4.0 | 50 of 50 passed |
+| Same section file on Dawn, for the 32 checks that apply there | 32 of 32 passed |
 | Drag to reorder in the theme editor | Preview follows the new order |
-| Same checks on Impact 7.2.0, section injected into a live page | No overflow at six widths, FAQ works |
-| Theme Check | 0 offenses, with two documented exclusions for Horizon's own `applicable_disclosures` filter |
+| Section injected into a live page on Impact 7.2.0 | No overflow at six widths, FAQ works, headings match the theme |
+| Theme Check | 0 offenses, with the exclusions documented in `.theme-check.yml` |
 
 ## What I'd do next
 
