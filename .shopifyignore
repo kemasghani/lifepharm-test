@@ -1,0 +1,7 @@
+# Repo-only files that must never reach a store
+README.md
+AGENTS.md
+scripts/**
+tests/**
+docs/**
+.github/**
