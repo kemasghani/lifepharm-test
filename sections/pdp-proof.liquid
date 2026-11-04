@@ -1,0 +1,113 @@
+{%- comment -%}
+  Customer quotes from custom.testimonials. Hidden when none are published.
+{%- endcomment -%}
+
+{%- capture proof_items -%}
+  {%- for testimonial in product.metafields.custom.testimonials.value limit: 3 -%}
+    {%- assign testimonial_quote = testimonial.quote.value | strip -%}
+    {%- if testimonial_quote != blank -%}
+      <figure class="pdp-proof__card">
+        <blockquote>{{ testimonial_quote | escape }}</blockquote>
+        <figcaption>
+          <strong>{{ testimonial.name.value | escape }}</strong>
+          {%- if testimonial.detail.value != blank -%}
+            <span>{{ testimonial.detail.value | escape }}</span>
+          {%- endif -%}
+        </figcaption>
+      </figure>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if proof_items != blank -%}
+  <div class="pdp-band pdp-proof">
+    <div class="pdp-band__inner">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="pdp-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pdp-proof__heading h2">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      <div class="pdp-proof__grid">{{ proof_items }}</div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .pdp-proof {
+    padding-block: clamp(3em, 2em + 3vw, 4.5em) 0;
+  }
+
+  .pdp-proof .pdp-proof__heading {
+    margin: 0 0 1.25em;
+    color: inherit;
+    font-size: clamp(1.5em, 1.3em + 1vw, 2.25em);
+    line-height: 1.15;
+  }
+
+  .pdp-proof__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17em), 1fr));
+    gap: 1em;
+  }
+
+  .pdp-proof__card {
+    display: grid;
+    gap: 1em;
+    align-content: space-between;
+    margin: 0;
+    padding: 1.5em;
+    border: 1px solid var(--pdp-line);
+    border-radius: 0.75em;
+  }
+
+  .pdp-proof__card blockquote {
+    margin: 0;
+    font-size: 1.125em;
+    line-height: 1.45;
+  }
+
+  .pdp-proof__card figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.125em 0.625em;
+    align-items: baseline;
+    font-size: 0.875em;
+  }
+
+  .pdp-proof__card figcaption span {
+    color: var(--pdp-muted);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Customer proof",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows up to three entries from custom.testimonials. Hidden when there are none."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Label",
+      "default": "In their words"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What keeps people going"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customer proof"
+    }
+  ]
+}
+{% endschema %}
