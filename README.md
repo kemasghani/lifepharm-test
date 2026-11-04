@@ -34,7 +34,7 @@ In the theme editor, a hidden block shows a short note instead, so the merchant 
 
 ### Decisions
 
-- **One self-contained file.** The section uses no theme snippets, classes or CSS variables, and it inherits fonts and colours from the page. It passes the same test matrix on Horizon and on Dawn with no edits.
+- **One self-contained file.** The section uses no theme snippets, classes or CSS variables, and it inherits fonts and colors from the page. It passes the same test matrix on Horizon and on Dawn with no edits.
 - **Sizes in `em`, not `rem`.** Testing on Dawn exposed this: Dawn sets the root to 62.5%, so `1rem` is only 10px there. Everything now scales from the theme's body text, with a 16px floor.
 - **Section blocks, not theme blocks.** They work in any Online Store 2.0 theme, including ones without a `blocks/` folder, and one pass can tell whether anything rendered.
 - **Metaobjects for ingredients and FAQs.** An ingredient is written once and reused across products, and merchants get a real form instead of hand-written JSON.

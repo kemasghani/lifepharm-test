@@ -10,11 +10,11 @@ const richText = (...paragraphs) =>
   });
 
 export const ingredients = [
-  { handle: 'spirulina', name: 'Spirulina', amount: '1.5 g', summary: 'A blue-green algae with a mild, savoury taste.', image: 'ingredient-spirulina' },
+  { handle: 'spirulina', name: 'Spirulina', amount: '1.5 g', summary: 'A blue-green algae with a mild, savory taste.', image: 'ingredient-spirulina' },
   { handle: 'wheatgrass', name: 'Wheatgrass', amount: '1 g', summary: 'Young wheat shoots, dried at a low temperature.', image: 'ingredient-wheatgrass' },
   { handle: 'matcha', name: 'Matcha', amount: '500 mg', summary: 'Stone-ground green tea with a smooth, grassy note.', image: 'ingredient-matcha' },
   { handle: 'ginger-root', name: 'Ginger root', amount: '250 mg', summary: 'Adds a gentle warmth to the finish.', image: 'ingredient-ginger-root' },
-  { handle: 'marine-collagen', name: 'Marine collagen', amount: '10 g', summary: 'Hydrolysed fish collagen that dissolves in hot or cold drinks.', image: 'ingredient-marine-collagen' },
+  { handle: 'marine-collagen', name: 'Marine collagen', amount: '10 g', summary: 'Hydrolyzed fish collagen that dissolves in hot or cold drinks.', image: 'ingredient-marine-collagen' },
   { handle: 'vitamin-c', name: 'Vitamin C', amount: '80 mg', summary: 'Ascorbic acid, added for a light citrus edge.', image: 'ingredient-vitamin-c' },
   // Saved as a draft on purpose: a product can reference it, but it must never
   // reach the storefront.
