@@ -8,6 +8,87 @@
  * ------------------------------------------------------------
  */{
   "sections": {
+    "reviewer_guide": {
+      "type": "reviewer-guide",
+      "blocks": {
+        "scenario_1": {
+          "type": "scenario",
+          "settings": {
+            "label": "Daily Greens Powder",
+            "url": "/products/daily-greens-powder",
+            "proves": "All three metafields filled",
+            "expected": "How to use, Key ingredients and Questions. Only five of six FAQs, because the block limit is five."
+          }
+        },
+        "scenario_2": {
+          "type": "scenario",
+          "settings": {
+            "label": "Daily Greens Travel Sticks",
+            "url": "/products/daily-greens-travel-sticks",
+            "proves": "A second JSON template with another block order",
+            "expected": "Questions first, then Key ingredients, then How to use. Headings sit above the content."
+          }
+        },
+        "scenario_3": {
+          "type": "scenario",
+          "settings": {
+            "label": "Magnesium Night Capsules",
+            "url": "/products/magnesium-night-capsules",
+            "proves": "One empty metafield",
+            "expected": "No Key ingredients block, and no gap where it would have been."
+          }
+        },
+        "scenario_4": {
+          "type": "scenario",
+          "settings": {
+            "label": "Marine Collagen Peptides",
+            "url": "/products/marine-collagen-peptides",
+            "proves": "No FAQ metafield",
+            "expected": "How to use and Key ingredients only."
+          }
+        },
+        "scenario_5": {
+          "type": "scenario",
+          "settings": {
+            "label": "Vitamin C Drink Mix",
+            "url": "/products/vitamin-c-drink-mix",
+            "proves": "Values that exist but render nothing: an empty list, a draft ingredient and an FAQ with an empty answer",
+            "expected": "No section at all."
+          }
+        },
+        "scenario_6": {
+          "type": "scenario",
+          "settings": {
+            "label": "Bamboo Measuring Scoop",
+            "url": "/products/bamboo-measuring-scoop",
+            "proves": "No guide metafields at all",
+            "expected": "No section at all."
+          }
+        },
+        "scenario_7": {
+          "type": "scenario",
+          "settings": {
+            "label": "Task 1b collection",
+            "url": "/collections/task-1b-cards",
+            "proves": "The fixed card snippet",
+            "expected": "Four cards. Marine Collagen shows Save $6.00. Daily Greens shows no saving, because its first variant has no compare-at price."
+          }
+        }
+      },
+      "block_order": [
+        "scenario_1",
+        "scenario_2",
+        "scenario_3",
+        "scenario_4",
+        "scenario_5",
+        "scenario_6",
+        "scenario_7"
+      ],
+      "settings": {
+        "heading": "Trial review guide",
+        "intro": "Sample products only. Each page below proves one behaviour of the Product guide section or the Task 1b fix. Resize the window, or open a page on a phone, to check the mobile layout."
+      }
+    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -279,6 +360,7 @@
     }
   },
   "order": [
+    "reviewer_guide",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]

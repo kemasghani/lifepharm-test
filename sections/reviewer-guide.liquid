@@ -1,0 +1,142 @@
+{%- comment -%}
+  Demo only: gives trial reviewers one page of links to every scenario. Not part
+  of the Product guide, and it can be deleted without touching anything else.
+{%- endcomment -%}
+
+<div class="reviewer-guide">
+  <h1 class="reviewer-guide__title">{{ section.settings.heading | escape }}</h1>
+  <p class="reviewer-guide__intro">{{ section.settings.intro | escape }}</p>
+
+  <table class="reviewer-guide__table">
+    <thead>
+      <tr>
+        <th scope="col">Page</th>
+        <th scope="col">What it proves</th>
+        <th scope="col">Expected</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for block in section.blocks -%}
+        <tr {{ block.shopify_attributes }}>
+          <td data-label="Page"><a href="{{ block.settings.url }}">{{ block.settings.label | escape }}</a></td>
+          <td data-label="What it proves">{{ block.settings.proves | escape }}</td>
+          <td data-label="Expected">{{ block.settings.expected | escape }}</td>
+        </tr>
+      {%- endfor -%}
+    </tbody>
+  </table>
+</div>
+
+{% stylesheet %}
+  .reviewer-guide {
+    max-width: 75rem;
+    margin-inline: auto;
+    padding: 3rem clamp(1.25rem, 0.75rem + 2.5vw, 3rem);
+  }
+
+  .reviewer-guide__title {
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
+  }
+
+  .reviewer-guide__intro {
+    max-width: 44rem;
+    margin: 0 0 2rem;
+    line-height: 1.55;
+  }
+
+  .reviewer-guide__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+    line-height: 1.45;
+  }
+
+  .reviewer-guide__table th,
+  .reviewer-guide__table td {
+    padding: 0.75rem 1rem 0.75rem 0;
+    border-block-end: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .reviewer-guide__table a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  @media (max-width: 749px) {
+    .reviewer-guide__table thead {
+      display: none;
+    }
+
+    .reviewer-guide__table tr {
+      display: block;
+      padding-block: 0.75rem;
+      border-block-end: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+    }
+
+    .reviewer-guide__table td {
+      display: block;
+      padding: 0.125rem 0;
+      border: 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Reviewer guide",
+  "enabled_on": {
+    "templates": ["index"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Trial review guide"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "scenario",
+      "name": "Scenario",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Link label"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "proves",
+          "label": "What it proves"
+        },
+        {
+          "type": "text",
+          "id": "expected",
+          "label": "Expected result"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviewer guide"
+    }
+  ]
+}
+{% endschema %}
