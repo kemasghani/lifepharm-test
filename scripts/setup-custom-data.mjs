@@ -26,9 +26,9 @@ const CREATE_METAOBJECT = /* GraphQL */ `
 `;
 
 const FIND_METAFIELD = /* GraphQL */ `
-  query FindMetafieldDefinition($key: String!) {
-    metafieldDefinitions(first: 1, ownerType: PRODUCT, namespace: "custom", key: $key) {
-      nodes { id key }
+  query FindMetafieldDefinition($key: String!, $ownerType: MetafieldOwnerType!) {
+    metafieldDefinitions(first: 1, ownerType: $ownerType, namespace: "custom", key: $key) {
+      nodes { id key type { name } }
     }
   }
 `;
@@ -74,10 +74,15 @@ for (const { type, name, displayNameKey, fieldDefinitions } of metaobjects) {
   console.log(`create  metaobject ${type}`);
 }
 
-for (const { key, name, description, type, metaobjectType } of productMetafields) {
-  const existing = gql(store, FIND_METAFIELD, { key }).metafieldDefinitions.nodes[0];
+for (const { key, name, description, type, metaobjectType, ownerType = 'PRODUCT' } of productMetafields) {
+  const existing = gql(store, FIND_METAFIELD, { key, ownerType }).metafieldDefinitions.nodes[0];
 
   if (existing) {
+    // A key that already exists with another type would make the theme read the
+    // wrong shape of data, so stop instead of skipping past it.
+    if (existing.type.name !== type) {
+      throw new Error(`custom.${key} exists as ${existing.type.name}, expected ${type}`);
+    }
     console.log(`skip    metafield custom.${key}`);
     continue;
   }
@@ -85,7 +90,7 @@ for (const { key, name, description, type, metaobjectType } of productMetafields
   const { metafieldDefinitionCreate: result } = gql(store, CREATE_METAFIELD, {
     definition: {
       namespace: 'custom',
-      ownerType: 'PRODUCT',
+      ownerType,
       key,
       name,
       description,
