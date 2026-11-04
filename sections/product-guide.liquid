@@ -137,27 +137,33 @@
 {%- endif -%}
 
 {% stylesheet %}
+  /*
+    Sizes use em, not rem. Themes disagree on the root size (Dawn sets it to
+    62.5%, so 1rem is 10px there), so everything scales from this section's
+    own font size: the theme's body text, but never below 16px.
+  */
   .product-guide {
-    --pg-gap: clamp(2.5rem, 2rem + 2.5vw, 4.5rem);
+    --pg-gap: clamp(2.5em, 2em + 2.5vw, 4.5em);
     --pg-line: color-mix(in srgb, currentColor 16%, transparent);
     --pg-muted: color-mix(in srgb, currentColor 74%, transparent);
 
     padding-block: var(--pg-padding-top) var(--pg-padding-bottom);
     background: var(--pg-background, transparent);
     color: var(--pg-text, inherit);
+    font-size: max(1em, 16px);
   }
 
   .product-guide__inner {
     display: grid;
     gap: var(--pg-gap);
-    max-width: 75rem;
+    max-width: 75em;
     margin-inline: auto;
-    padding-inline: clamp(1.25rem, 0.75rem + 2.5vw, 3rem);
+    padding-inline: clamp(1.25em, 0.75em + 2.5vw, 3em);
   }
 
   .product-guide__block {
     display: grid;
-    gap: 1.5rem clamp(2rem, 6vw, 5rem);
+    gap: 1.5em clamp(2em, 6vw, 5em);
     min-width: 0;
   }
 
@@ -170,7 +176,7 @@
   .product-guide__heading {
     margin: 0;
     color: inherit;
-    font-size: clamp(1.5rem, 1.3rem + 1vw, 2.25rem);
+    font-size: clamp(1.5em, 1.3em + 1vw, 2.25em);
     line-height: 1.15;
   }
 
@@ -183,24 +189,24 @@
 
   .product-guide__block--how_to_use .product-guide__items {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-    gap: 1.5rem 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13em), 1fr));
+    gap: 1.5em 2em;
     counter-reset: product-guide-step;
   }
 
   .product-guide__step {
-    padding-block-start: 0.875rem;
+    padding-block-start: 0.875em;
     border-block-start: 1px solid var(--pg-line);
-    font-size: 1rem;
+    font-size: 1em;
     line-height: 1.55;
     counter-increment: product-guide-step;
   }
 
   .product-guide__step::before {
     display: block;
-    margin-block-end: 0.5rem;
+    margin-block-end: 0.5em;
     color: var(--pg-muted);
-    font-size: 0.8125rem;
+    font-size: 0.8125em;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.08em;
     content: counter(product-guide-step, decimal-leading-zero);
@@ -208,13 +214,13 @@
 
   .product-guide__block--key_ingredients .product-guide__items {
     display: grid;
-    gap: 1.25rem;
+    gap: 1.25em;
   }
 
   .product-guide__ingredient {
     display: grid;
-    grid-template-columns: 4.5rem minmax(0, 1fr);
-    gap: 1rem;
+    grid-template-columns: 4.5em minmax(0, 1fr);
+    gap: 1em;
     align-content: start;
     align-items: start;
   }
@@ -224,7 +230,7 @@
     width: 100%;
     height: auto;
     aspect-ratio: 1;
-    border-radius: 0.5rem;
+    border-radius: 0.5em;
     object-fit: cover;
   }
 
@@ -236,15 +242,15 @@
   .product-guide__ingredient-name {
     margin: 0;
     color: inherit;
-    font-size: 1.0625rem;
+    font-size: 1.0625em;
     line-height: 1.3;
   }
 
   .product-guide__ingredient-amount,
   .product-guide__ingredient-summary {
-    margin: 0.25rem 0 0;
+    margin: 0.25em 0 0;
     color: var(--pg-muted);
-    font-size: 0.9375rem;
+    font-size: 0.9375em;
     line-height: 1.5;
   }
 
@@ -262,12 +268,12 @@
 
   .product-guide__question {
     display: flex;
-    gap: 1rem;
+    gap: 1em;
     align-items: center;
     justify-content: space-between;
-    min-height: 3.25rem;
-    padding-block: 0.875rem;
-    font-size: 1.0625rem;
+    min-height: 3em;
+    padding-block: 0.8em;
+    font-size: 1.0625em;
     font-weight: 500;
     line-height: 1.35;
     list-style: none;
@@ -285,8 +291,8 @@
 
   .product-guide__question::after {
     flex: none;
-    width: 0.875rem;
-    height: 0.875rem;
+    width: 0.875em;
+    height: 0.875em;
     background:
       linear-gradient(currentColor, currentColor) center / 100% 1.5px no-repeat,
       linear-gradient(currentColor, currentColor) center / 1.5px 100% no-repeat;
@@ -299,9 +305,9 @@
   }
 
   .product-guide__answer {
-    padding-block-end: 1.125rem;
+    padding-block-end: 1.125em;
     color: var(--pg-muted);
-    font-size: 1rem;
+    font-size: 1em;
     line-height: 1.6;
   }
 
@@ -315,11 +321,11 @@
 
   .product-guide__notice {
     margin: 0;
-    padding: 1rem 1.25rem;
+    padding: 1em 1.25em;
     border: 1px dashed var(--pg-line);
-    border-radius: 0.5rem;
+    border-radius: 0.5em;
     color: var(--pg-muted);
-    font-size: 0.875rem;
+    font-size: 0.875em;
     line-height: 1.5;
   }
 
@@ -348,13 +354,13 @@
 
     .product-guide--split .product-guide__heading {
       position: sticky;
-      top: 6rem;
+      top: 6em;
       align-self: start;
     }
 
     .product-guide__block--key_ingredients .product-guide__items {
-      grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
-      gap: 2rem 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(9.5em, 1fr));
+      gap: 2em 1.5em;
     }
 
     .product-guide__ingredient {
