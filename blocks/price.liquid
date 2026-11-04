@@ -56,7 +56,8 @@
   {% render 'price',
     show_unit_price: true,
     product_resource: product_resource,
-    show_sale_price_first: block_settings.show_sale_price_first
+    show_sale_price_first: block_settings.show_sale_price_first,
+    show_value: block_settings.show_value
   %}
 
   {% if block_settings.show_tax_info %}
@@ -104,6 +105,13 @@
     {
       "type": "paragraph",
       "content": "t:content.edit_price_in_theme_settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_value",
+      "label": "Show saving and price per serving",
+      "info": "Price per serving reads the variant metafield custom.servings.",
+      "default": false
     },
     {
       "type": "checkbox",

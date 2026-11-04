@@ -385,5 +385,13 @@
       "default_title": "Default Title",
       "sticky_add_to_cart": "Quick add to cart bar"
     }
+  },
+  "pdp": {
+    "from": "From",
+    "key_ingredients": "Key ingredients",
+    "per_serving": "Per serving",
+    "price_per_serving": "{{ price }} per serving",
+    "save": "Save {{ amount }}",
+    "servings": "Servings"
   }
 }
